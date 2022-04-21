@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "app-assistencia-social"
+    "default": "app-assistencia-social-dev",
+    "prod": "app-assistencia-social"
   }
 }

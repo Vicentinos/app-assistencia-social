@@ -1,0 +1,14 @@
+name: Deploy to Firebase Prod on main merge
+'on':
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci && npm run -w hosting build
+      - run: npx firebase use prod
+      - run: npx firebase deploy --only hosting --project app-assistencia-social

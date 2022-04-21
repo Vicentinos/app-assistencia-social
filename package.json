@@ -1,8 +1,7 @@
 {
   "name": "app-assistencia-social",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"Vai dar tudo certo!\""
+    "emulators": "firebase emulators:start --project demo-test"
   },
   "workspaces": [
     "functions",
