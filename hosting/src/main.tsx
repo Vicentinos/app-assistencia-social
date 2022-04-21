@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {AuthenticationModal} from "./AuthenticationModal";
 
 ReactDOM.render(
     <React.StrictMode>
-        Hello Worlds!
+      <AuthenticationModal/>
     </React.StrictMode>,
     document.getElementById("root"),
 );
