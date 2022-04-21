@@ -10,5 +10,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm ci && npm run -w hosting build
-      - run: npx firebase use prod
-      - run: npx firebase deploy --only hosting --project app-assistencia-social
+      - run: npm install -g firebase-tools
+      - run: firebase use prod && firebase deploy
