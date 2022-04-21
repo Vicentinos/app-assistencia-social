@@ -14,5 +14,8 @@
     ]
   },
   "functions": {
+    "predeploy": [
+      "npm -w functions run build"
+    ]
   }
 }
