@@ -7,7 +7,7 @@ const Main: FC = () => {
     <>
       <AuthenticationModal
         isLoggedIn={false}
-        onSendEmailLogin={(email: string, password: string) => {
+        onSubmitEmailLogin={(email: string, password: string) => {
           console.log(email, password);
         }}
       />
