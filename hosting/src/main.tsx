@@ -1,16 +1,16 @@
-import { getAuth } from "firebase/auth";
 import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import { AuthenticationModal } from "./auth/authentication-modal";
-import { useFirebaseInit } from "./config/firebase-auto";
 
 const Main: FC = () => {
-  const firebaseInitialized = useFirebaseInit();
   return (
     <>
-      {firebaseInitialized && (
-        <AuthenticationModal isLoggedIn={!!getAuth().currentUser} />
-      )}
+      <AuthenticationModal
+        isLoggedIn={false}
+        onSendEmailLogin={(email: string, password: string) => {
+          console.log(email, password);
+        }}
+      />
     </>
   );
 };
