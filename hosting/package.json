@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "vite build --watch",
-    "start": "vite",
+    "build": "vite build",
+    "start": "vite build --watch --mode development",
     "test": "jest"
   },
   "repository": {

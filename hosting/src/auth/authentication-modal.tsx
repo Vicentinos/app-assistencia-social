@@ -1,37 +1,69 @@
 import React, { useState } from "react";
-import { Box, Button, Dialog, TextField } from "@mui/material";
+import { Box, Button, Collapse, Dialog, TextField } from "@mui/material";
 
 export type Props = {
+  onVerifyEmail: (email: string) => Promise<{ isRegistered: boolean }>;
   isLoggedIn: boolean;
   onSubmitEmailLogin: (email: string, password: string) => void;
 };
+
+const useFormState = () =>
+  useState<{ email: string; password: string; isRegistered: boolean | null }>({
+    email: "",
+    password: "",
+    isRegistered: null,
+  });
+
 export const AuthenticationModal: React.FC<Props> = (props) => {
-  const [emailValue, setEmailValue] = useState("");
-  const [pwValue, setPwValue] = useState("");
+  const [formState, setFormState] = useFormState();
   return (
     <Dialog open={!props.isLoggedIn}>
-      <Box role={"alertdialog"}>
+      <Box role={"alertdialog"} m={3}>
         <TextField
           label={"Email"}
-          value={emailValue}
+          value={formState.email}
           onChange={(event) => {
-            setEmailValue(event.target.value);
+            setFormState(() => ({
+              email: event.target.value,
+              password: "",
+              isRegistered: null,
+            }));
           }}
         />
-        <TextField
-          label={"Senha"}
-          value={pwValue}
-          onChange={(event) => {
-            setPwValue(event.target.value);
-          }}
-        />
-        <Button
-          onClick={() => {
-            props.onSubmitEmailLogin(emailValue, pwValue);
-          }}
-        >
-          Enviar
-        </Button>
+        <Collapse in={Boolean(formState.isRegistered)}>
+          <TextField
+            label={"Senha"}
+            value={formState.password}
+            onChange={(event) => {
+              setFormState((state) => ({
+                ...state,
+                password: event.target.value,
+              }));
+            }}
+          />
+        </Collapse>
+        <Collapse in={formState.isRegistered === null}>
+          <Button
+            onClick={() => {
+              props.onVerifyEmail(formState.email).then((result) => {
+                if (result.isRegistered) {
+                  setFormState((state) => ({ ...state, isRegistered: true }));
+                }
+              });
+            }}
+          >
+            Continuar
+          </Button>
+        </Collapse>
+        <Collapse in={Boolean(formState.isRegistered)}>
+          <Button
+            onClick={() => {
+              props.onSubmitEmailLogin(formState.email, formState.password);
+            }}
+          >
+            Enviar
+          </Button>
+        </Collapse>
       </Box>
     </Dialog>
   );
