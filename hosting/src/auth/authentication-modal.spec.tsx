@@ -25,7 +25,7 @@ describe("AuthenticationModal component", () => {
     render(<AuthenticationModal {...props} />);
     expect(screen.queryByRole("alertdialog")).toBeInTheDocument();
   });
-  it("should call the onSubmitEmailLogin method when user clicks button", async () => {
+  it("should login using email only", async () => {
     const user = userEvent.setup();
     props.onSubmitEmailLogin.mockResolvedValue(/* void */);
 
