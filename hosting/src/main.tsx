@@ -7,8 +7,7 @@ const Main: FC = () => {
     <>
       <AuthenticationModal
         isLoggedIn={false}
-        onSubmitEmailLogin={(email, password) => console.log(email, password)}
-        onVerifyEmail={() => ({ isRegistered: true })}
+        onSubmitEmailLogin={async (email) => console.log(email)}
       />
     </>
   );

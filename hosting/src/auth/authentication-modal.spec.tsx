@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import {
@@ -14,7 +14,6 @@ describe("AuthenticationModal component", () => {
     props = {
       isLoggedIn: false,
       onSubmitEmailLogin: jest.fn(),
-      onVerifyEmail: jest.fn(),
     };
   });
   it("should not display anything when user is logged-in", () => {
@@ -26,43 +25,41 @@ describe("AuthenticationModal component", () => {
     render(<AuthenticationModal {...props} />);
     expect(screen.queryByRole("alertdialog")).toBeInTheDocument();
   });
-  it("should call the onSubmitEmailLogin method when user tries to log in while being registered", async () => {
+  it("should call the onSubmitEmailLogin method when user clicks button", async () => {
     const user = userEvent.setup();
-    props.onVerifyEmail.mockImplementation(async () => ({
-      isRegistered: true,
-    }));
+    props.onSubmitEmailLogin.mockResolvedValue(/* void */);
+
     render(<AuthenticationModal {...props} />);
-    const passwordInput = screen.getByLabelText("Senha");
     const emailInput = screen.getByLabelText("Email");
-    const verifyEmailButton = screen.getByText("Continuar");
-    const submitLoginButton = screen.getByText("Enviar");
+    const submitLoginButton = screen.getByText(
+      "Enviar link mágico para o meu email"
+    );
 
+    expect(
+      screen.getByText("Entre utilizando seu email abaixo:")
+    ).toBeVisible();
     expect(emailInput).toBeVisible();
-    expect(verifyEmailButton).toBeVisible();
-    expect(passwordInput).not.toBeVisible();
-    expect(submitLoginButton).not.toBeVisible();
-    expect(verifyEmailButton).not.toHaveAttribute("aria-busy", true);
+    expect(
+      screen.getByText(
+        "Nós enviaremos um link mágico para o seu email. Clique no link para entrar automaticamente!"
+      )
+    ).toBeVisible();
+    expect(submitLoginButton).not.toBeVisible(); // submit button only becomes visible once the user inputs a valid email
 
-    await user.type(emailInput, "some-email@email.com");
-    await user.click(verifyEmailButton);
-    expect(verifyEmailButton).toHaveAttribute("aria-busy", true);
-    expect(verifyEmailButton).toBeDisabled();
-    expect(emailInput).toBeDisabled();
-    await waitFor(() => {
-      expect(passwordInput).toBeVisible();
-      expect(submitLoginButton).toBeVisible();
-      expect(submitLoginButton).not.toHaveAttribute("aria-busy", true);
-      expect(verifyEmailButton).not.toBeVisible();
-    });
-    await user.type(passwordInput, "some-password");
+    await user.type(emailInput, "some-email@email");
+    expect(submitLoginButton).not.toBeVisible();
+    await user.type(emailInput, ".com");
+    expect(submitLoginButton).toBeVisible();
+    expect(submitLoginButton).not.toHaveAttribute("aria-busy", "true");
+
     await user.click(submitLoginButton);
-    expect(passwordInput).toBeDisabled();
+    expect(submitLoginButton).toHaveAttribute("aria-busy", "true");
     expect(submitLoginButton).toBeDisabled();
-    expect(submitLoginButton).toHaveAttribute("aria-busy", true);
+    expect(emailInput).toBeDisabled();
+
     expect(props.onSubmitEmailLogin).toHaveBeenCalledTimes(1);
     expect(props.onSubmitEmailLogin).toHaveBeenCalledWith(
-      "some-email@email.com",
-      "some-password"
+      "some-email@email.com"
     );
   });
 });
