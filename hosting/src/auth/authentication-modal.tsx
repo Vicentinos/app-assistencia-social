@@ -14,8 +14,12 @@ export type Props = {
   onSubmitEmailLogin: (email: string) => Promise<void>;
 };
 
-const validateEmail = (email: string) =>
-  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
+const validateEmail = (email: string) => {
+  const emailRegex =
+    // eslint-disable-next-line
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}])|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$/;
+  return emailRegex.test(email);
+};
 
 export const AuthenticationModal: React.FC<Props> = (props) => {
   const [formState, setFormState] = useState<{
