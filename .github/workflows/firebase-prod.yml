@@ -1,4 +1,4 @@
-name: Deploy to Firebase Prod on main merge
+name: Deploy to Firebase PROD on MAIN merge
 "on":
   push:
     branches:
