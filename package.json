@@ -1,11 +1,14 @@
 {
   "name": "app-assistencia-social",
   "scripts": {
-    "emulators": "firebase emulators:start --project demo-test"
+    "dev:host": "npm run dev -w hosting",
+    "dev:emul": "firebase emulators:start",
+    "dev:cy": "npm run open -w e2e-suite"
   },
   "workspaces": [
     "functions",
-    "hosting"
+    "hosting",
+    "e2e-suite"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.12.0",
