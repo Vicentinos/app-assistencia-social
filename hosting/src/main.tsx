@@ -1,22 +1,20 @@
-import React, { FC } from "react";
-import { AuthenticationModal } from "./auth/authentication-modal";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import { FirebaseAppProvider } from "reactfire";
+import { FirebaseSetup } from "./firebase/setup";
+import { AuthenticationModal } from "./auth/authentication-modal-container";
+import { useFirebaseInitJson } from "./firebase/useFirebaseInitJson";
 
-const Main: FC = () => {
+export const Main: React.FC = () => {
+  const initJson = useFirebaseInitJson();
   return (
     <>
-      <AuthenticationModal
-        isLoggedIn={false}
-        onSubmitEmailLogin={async (email) => console.log(email)}
-      />
+      {initJson && (
+        <FirebaseAppProvider suspense firebaseConfig={initJson}>
+          <FirebaseSetup>
+            <AuthenticationModal />
+          </FirebaseSetup>
+        </FirebaseAppProvider>
+      )}
     </>
   );
 };
-const container = document.getElementById("root");
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const root = createRoot(container!); // createRoot(container!) if you use TypeScript
-root.render(
-  <React.StrictMode>
-    <Main />
-  </React.StrictMode>
-);

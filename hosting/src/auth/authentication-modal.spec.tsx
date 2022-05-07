@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import {
-  AuthenticationModal,
+  AuthenticationModalPresentation,
   Props as AuthModalProps,
-} from "./authentication-modal";
+} from "./authentication-modal-presentation";
 import { MockedObject } from "ts-jest";
 
 describe("AuthenticationModal component", () => {
@@ -18,18 +18,18 @@ describe("AuthenticationModal component", () => {
   });
   it("should not display anything when user is logged-in", () => {
     props.isLoggedIn = true;
-    render(<AuthenticationModal {...props} />);
+    render(<AuthenticationModalPresentation {...props} />);
     expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
   });
   it("should display an alertdialog when user is NOT logged-in", () => {
-    render(<AuthenticationModal {...props} />);
+    render(<AuthenticationModalPresentation {...props} />);
     expect(screen.queryByRole("alertdialog")).toBeInTheDocument();
   });
   it("should login using email only", async () => {
     const user = userEvent.setup();
     props.onSubmitEmailLogin.mockResolvedValue(/* void */);
 
-    render(<AuthenticationModal {...props} />);
+    render(<AuthenticationModalPresentation {...props} />);
     const emailInput = screen.getByLabelText("Email");
     const submitLoginButton = screen.getByText(
       "Enviar link mágico para o meu email"
