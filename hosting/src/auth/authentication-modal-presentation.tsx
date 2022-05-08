@@ -8,50 +8,38 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEmailValidation } from "./hooks/use-email-validation";
-import { useAuthenticationFormState } from "./hooks/use-authentication-form-state";
-import { useEmailChangeHandler } from "./hooks/use-email-change-handler";
-import { useFormSubmitHandler } from "./hooks/use-form-submit-handler";
+import { useAuthenticationModalPresentationLogic } from "./hooks/use-authentication-modal-presentation-logic";
 
 export type Props = {
   isLoggedIn: boolean;
   onSubmitEmailLogin: (email: string) => Promise<void>;
 };
 
-export const AuthenticationModalPresentation: React.FC<Props> = ({
-  isLoggedIn,
-  onSubmitEmailLogin,
-}) => {
-  const [{ email, submitted, submitting }, setFormState] =
-    useAuthenticationFormState();
-  const isEmailValid = useEmailValidation(email);
-  const onEmailChange = useEmailChangeHandler(setFormState);
-  const onClickSubmit = useFormSubmitHandler(
-    onSubmitEmailLogin,
-    email,
-    setFormState
+export const AuthenticationModalPresentation: React.FC<Props> = (props) => {
+  const logic = useAuthenticationModalPresentationLogic(
+    props.onSubmitEmailLogin
   );
   return (
-    <Dialog open={!isLoggedIn}>
+    <Dialog open={!props.isLoggedIn}>
       <Box role={"alertdialog"} m={3}>
-        <Collapse in={!submitted}>
+        <Collapse in={!logic.submitted}>
           <Stack spacing={1}>
             <Typography>Entre utilizando seu email abaixo:</Typography>
             <TextField
               label={"Email"}
-              value={email}
-              disabled={submitting}
-              onChange={onEmailChange}
+              value={logic.email}
+              disabled={logic.submitting}
+              onChange={logic.onEmailChange}
             />
             <Typography variant={"caption"}>
               Nós enviaremos um link mágico para o seu email. Clique no link
               para entrar automaticamente!
             </Typography>
-            <Collapse in={isEmailValid}>
+            <Collapse in={logic.isEmailValid}>
               <Button
-                onClick={onClickSubmit}
-                aria-busy={submitting}
-                disabled={submitting}
+                onClick={logic.onClickSubmit}
+                aria-busy={logic.submitting}
+                disabled={logic.submitting}
                 fullWidth
                 variant={"contained"}
               >
@@ -60,10 +48,10 @@ export const AuthenticationModalPresentation: React.FC<Props> = ({
             </Collapse>
           </Stack>
         </Collapse>
-        <Collapse in={submitted}>
+        <Collapse in={logic.submitted}>
           <Typography>
-            Enviamos um link mágico para o email {email}. Clique no link para
-            entrar automaticamente no App Vicentino.
+            Enviamos um link mágico para o email {logic.email}. Clique no link
+            para entrar automaticamente no App Vicentino.
           </Typography>
         </Collapse>
       </Box>
