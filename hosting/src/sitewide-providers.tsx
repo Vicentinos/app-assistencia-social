@@ -3,7 +3,14 @@ import { useFirebaseInitJson } from "./firebase/useFirebaseInitJson";
 import { FirebaseAppProvider } from "reactfire";
 import { FirebaseSetup } from "./firebase/setup";
 
-export const SitewideProviders = (props: { children: React.ReactNode }) => {
+/**
+ * The Sitewide Providers should be the topmost component as it is
+ * the one responsible for providing all the "global" `React.Context`s
+ *
+ */
+export const SitewideProviders: React.FC<{
+  children?: React.ReactNode;
+}> = (props) => {
   const initJson = useFirebaseInitJson();
   if (!initJson) return null;
   return (
