@@ -6,5 +6,16 @@ declare namespace Cypress {
       arg: null,
       options?: Partial<Loggable & Timeoutable>
     ): Chainable<import("firebase-admin/auth").UserRecord[]>;
+
+    getOobCodes(): Chainable<
+      {
+        email: string;
+        oobCode: string;
+        oobLink: string;
+        requestType: string;
+      }[]
+    >;
+
+    clearIndexedDB(): Promise<void>;
   }
 }
