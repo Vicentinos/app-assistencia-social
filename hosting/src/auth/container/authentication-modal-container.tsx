@@ -7,8 +7,6 @@ import { useAuthenticationModalContainerLogic } from "./hooks/use-authentication
  * as it will be displayed as an overlay when the user is unauthenticated.
  *
  * @component
- *
- * @example
  */
 export const AuthenticationModal = () => {
   const logic = useAuthenticationModalContainerLogic();
