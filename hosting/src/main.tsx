@@ -1,7 +1,7 @@
 import React from "react";
 import { FirebaseAppProvider } from "reactfire";
 import { FirebaseSetup } from "./firebase/setup";
-import { AuthenticationModal } from "./auth/authentication-modal-container";
+import { AuthenticationModal } from "./auth/container/authentication-modal-container";
 import { useFirebaseInitJson } from "./firebase/useFirebaseInitJson";
 import { SecureRoutes } from "./secure-routes";
 

@@ -2,7 +2,7 @@ import { useAuth, useSigninCheck } from "reactfire";
 import { useSubmitEmailLoginHandler } from "./use-submit-email-login-handler";
 import { useSignInWithEmailLink } from "./use-sign-in-with-email-link";
 
-export const useAuthenticationModalLogic: () => {
+export const useAuthenticationModalContainerLogic: () => {
   signedIn: boolean;
   onSubmitEmailLogin: (email: string) => Promise<void>;
 } = () => {
