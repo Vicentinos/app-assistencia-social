@@ -16,4 +16,4 @@ export const useFormSubmitHandler = (
         submitted: true,
       }));
     });
-  }, [submitEmailLogin]);
+  }, [submitEmailLogin, email]);
