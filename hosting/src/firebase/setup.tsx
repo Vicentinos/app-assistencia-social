@@ -9,11 +9,10 @@ export const FirebaseSetup: React.FC<
   const app = useFirebaseApp();
   const database = getDatabase(app);
   const auth = getAuth(app);
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== "production" && !auth.emulatorConfig) {
     connectDatabaseEmulator(database, "localhost", 9000);
     connectAuthEmulator(auth, "http://localhost:9099");
   }
-
   return (
     <AuthProvider sdk={auth}>
       <DatabaseProvider sdk={database}>{props.children}</DatabaseProvider>

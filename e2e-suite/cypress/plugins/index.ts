@@ -1,15 +1,18 @@
 import "dotenv/config";
-import { getAuth, UserRecord } from "firebase-admin/auth";
+import { getAuth } from "firebase-admin/auth";
 import { applicationDefault, initializeApp } from "firebase-admin/app";
 
 initializeApp({
   credential: applicationDefault(),
+  projectId: "app-assistencia-social-dev",
 });
 const pluginConfig: Cypress.PluginConfig = (on) => {
   on("task", {
-    getAuthUsers: async (): Promise<UserRecord[]> => {
-      const result = await getAuth().getUsers([]);
-      return result.users;
+    makeUserAdmin: async (email: string): Promise<null> => {
+      const auth = getAuth();
+      const user = await auth.getUserByEmail(email);
+      await auth.setCustomUserClaims(user.uid, { admin: true });
+      return null;
     },
   });
 };
