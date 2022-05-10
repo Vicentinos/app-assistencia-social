@@ -19,5 +19,6 @@ declare namespace Cypress {
     clearIndexedDB(): Promise<void>;
 
     singInFromEmailLink(email: string): Promise<void>;
+    registerNewUser(email: string): Promise<void>;
   }
 }

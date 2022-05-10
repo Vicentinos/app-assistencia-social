@@ -31,6 +31,12 @@ Cypress.Commands.add("clearIndexedDB", async () => {
     )
   );
 });
+Cypress.Commands.add("registerNewUser", (email: string) => {
+  cy.visit("/");
+  cy.contains("Entre utilizando seu email abaixo:");
+  cy.findByLabelText("Email").type(email);
+  cy.findByText("Enviar link mágico para o meu email").click();
+});
 Cypress.Commands.add("singInFromEmailLink", (email: string) => {
   cy.getOobCodes().should((oobCodes) => {
     const myOobCode = oobCodes.find((oobCode) => oobCode.email === email);

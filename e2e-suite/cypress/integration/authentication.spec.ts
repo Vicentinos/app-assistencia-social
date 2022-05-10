@@ -28,4 +28,12 @@ describe("Authentication", () => {
       `Solicite acesso à pessoa na sua conferência responsável pelo Aplicativo Vicentino.`
     );
   });
+
+  it("should sign out", () => {
+    cy.registerNewUser(email);
+    cy.singInFromEmailLink(email);
+    cy.findByLabelText("Minha conta").click();
+    cy.findByText("Sair da conta").click();
+    cy.contains("Entre utilizando seu email abaixo:");
+  });
 });
