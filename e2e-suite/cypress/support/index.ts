@@ -31,3 +31,11 @@ Cypress.Commands.add("clearIndexedDB", async () => {
     )
   );
 });
+Cypress.Commands.add("singInFromEmailLink", (email: string) => {
+  cy.getOobCodes().should((oobCodes) => {
+    const myOobCode = oobCodes.find((oobCode) => oobCode.email === email);
+    if (!myOobCode) throw "oob code not found";
+    expect(myOobCode).to.have.property("requestType", "EMAIL_SIGNIN");
+    cy.visit(myOobCode.oobLink);
+  });
+});

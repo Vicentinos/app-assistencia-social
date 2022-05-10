@@ -1,18 +1,18 @@
 import { Chance } from "chance";
 
-describe("registration", () => {
+describe("Authentication", () => {
   let chance: Chance.Chance;
   let name: string;
   let email: string;
 
-  before(() => {
+  beforeEach(() => {
+    cy.clearIndexedDB();
     chance = new Chance();
     name = chance.name({ middle: true });
     email = `${name.split(" ").join(".").toLocaleLowerCase()}@example.com`;
   });
 
   it("should register a new user", () => {
-    cy.clearIndexedDB();
     cy.visit("/");
     cy.contains("Entre utilizando seu email abaixo:");
     cy.findByLabelText("Email").type(email);

@@ -17,5 +17,7 @@ declare namespace Cypress {
     >;
 
     clearIndexedDB(): Promise<void>;
+
+    singInFromEmailLink(email: string): Promise<void>;
   }
 }
