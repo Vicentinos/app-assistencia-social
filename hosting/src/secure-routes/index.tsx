@@ -3,6 +3,7 @@ import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
 
 import React, { useLayoutEffect, useState } from "react";
 import { AccountMenu } from "./account-menu/container/account-menu-container";
+import { UnauthorizedUserDirection } from "./unauthorized-user-direction";
 
 /**
  * The Secure Routes component should be included high up in the application tree
@@ -32,14 +33,7 @@ export const SecureRoutes = () => {
         style={{ marginTop: `calc(${appBarHeight}px + 2em)` }}
         maxWidth={"md"}
       >
-        <Typography>
-          Este é o primeiro acesso com o email {signInCheckResult.user.email},
-          que ainda não está associado a nenhuma conferência.
-        </Typography>
-        <Typography>
-          Solicite acesso à pessoa na sua conferência responsável pelo
-          Aplicativo Vicentino.
-        </Typography>
+        <UnauthorizedUserDirection email={signInCheckResult.user.email} />
       </Container>
     </Box>
   );

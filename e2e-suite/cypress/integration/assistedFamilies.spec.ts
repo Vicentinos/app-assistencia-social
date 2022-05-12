@@ -17,10 +17,10 @@ describe("Assisted families management", () => {
     cy.contains("Este é o primeiro acesso com o email");
     cy.task("makeUserAdmin", voluntaryUserFixture.email);
     cy.reload();
-    cy.findByText("Cadastrar família assistida").click();
+    cy.findByText("Cadastrar pessoa assistida").click();
     cy.findByLabelText("Nome").type(assistedFamilyFixture.name);
     cy.findByRole("button", { name: "Cadastrar" }).click();
-    cy.findByRole("table", { name: "Lista de famílias assistidas" }).contains(
+    cy.findByRole("table", { name: "Lista de pessoas assistidas" }).contains(
       assistedFamilyFixture.name
     );
   });
