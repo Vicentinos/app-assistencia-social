@@ -3,12 +3,16 @@ import { useFirebaseInitJson } from "./firebase/useFirebaseInitJson";
 import { FirebaseAppProvider } from "reactfire";
 import { FirebaseSetup } from "./firebase/setup";
 import { BrowserRouter } from "react-router-dom";
+import { createTheme, responsiveFontSizes, ThemeProvider } from "@mui/material";
 
 /**
  * The Sitewide Providers should be the topmost component as it is
  * the one responsible for providing all the "global" `React.Context`s
  *
  */
+let theme = createTheme();
+theme = responsiveFontSizes(theme, {});
+
 export const SitewideProviders: React.FC<{
   children?: React.ReactNode;
 }> = (props) => {
@@ -18,7 +22,9 @@ export const SitewideProviders: React.FC<{
     initJson && (
       <FirebaseAppProvider suspense firebaseConfig={initJson}>
         <BrowserRouter>
-          <FirebaseSetup>{props.children}</FirebaseSetup>
+          <ThemeProvider theme={theme}>
+            <FirebaseSetup>{props.children}</FirebaseSetup>
+          </ThemeProvider>
         </BrowserRouter>
       </FirebaseAppProvider>
     )
