@@ -6,14 +6,9 @@ import { AccountMenu } from "./account-menu/container/account-menu-container";
 import { UnauthorizedUserDirection } from "./unauthorized-user-direction";
 import { useElementHeight } from "../shared/use-element-height";
 import { useIsAdmin } from "./hooks/use-is-admin";
+import { Outlet } from "react-router-dom";
 
-/**
- * The Secure Routes component should be included high up in the application tree
- * as it will be used to display the proper route when the user **is authenticated**.
- *
- * @component
- */
-export const SecureRoutes = () => {
+export const AuthenticatedLayout = () => {
   const { data: signInCheckResult } = useSigninCheck();
   const user = useUser();
   const isAdmin = useIsAdmin(user);
@@ -34,7 +29,9 @@ export const SecureRoutes = () => {
         style={{ marginTop: `calc(${appBarHeight}px + 2em)` }}
         maxWidth={"md"}
       >
-        {isAdmin ? null : (
+        {isAdmin ? (
+          <Outlet />
+        ) : (
           <UnauthorizedUserDirection email={signInCheckResult.user.email} />
         )}
       </Container>

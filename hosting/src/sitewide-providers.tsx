@@ -2,6 +2,7 @@ import React from "react";
 import { useFirebaseInitJson } from "./firebase/useFirebaseInitJson";
 import { FirebaseAppProvider } from "reactfire";
 import { FirebaseSetup } from "./firebase/setup";
+import { BrowserRouter } from "react-router-dom";
 
 /**
  * The Sitewide Providers should be the topmost component as it is
@@ -16,7 +17,9 @@ export const SitewideProviders: React.FC<{
   return (
     initJson && (
       <FirebaseAppProvider suspense firebaseConfig={initJson}>
-        <FirebaseSetup>{props.children}</FirebaseSetup>
+        <BrowserRouter>
+          <FirebaseSetup>{props.children}</FirebaseSetup>
+        </BrowserRouter>
       </FirebaseAppProvider>
     )
   );

@@ -1,13 +1,13 @@
 import React from "react";
 import { AuthenticationModal } from "./auth/container/authentication-modal-container";
-import { SecureRoutes } from "./secure-routes/secure-routes";
 import { SitewideProviders } from "./sitewide-providers";
+import { MainAppRouter } from "./secure-routes/router";
 
 export const Main: React.FC = () => {
   return (
     <SitewideProviders>
       <AuthenticationModal />
-      <SecureRoutes />
+      <MainAppRouter />
     </SitewideProviders>
   );
 };
