@@ -1,21 +1,29 @@
 import React, { PropsWithChildren } from "react";
-import { AuthProvider, DatabaseProvider, useFirebaseApp } from "reactfire";
-import { connectDatabaseEmulator, getDatabase } from "firebase/database";
+import { AuthProvider, FirestoreProvider, useFirebaseApp } from "reactfire";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
+import {
+  connectFirestoreEmulator,
+  getFirestore,
+  setLogLevel,
+} from "firebase/firestore";
 
 export const FirebaseSetup: React.FC<
   PropsWithChildren<Record<string, unknown>>
 > = (props) => {
   const app = useFirebaseApp();
-  const database = getDatabase(app);
+  const firestoreInstance = getFirestore(app);
+
   const auth = getAuth(app);
   if (process.env.NODE_ENV !== "production" && !auth.emulatorConfig) {
-    connectDatabaseEmulator(database, "localhost", 9000);
+    setLogLevel("debug");
+    connectFirestoreEmulator(firestoreInstance, "localhost", 8080);
     connectAuthEmulator(auth, "http://localhost:9099");
   }
   return (
     <AuthProvider sdk={auth}>
-      <DatabaseProvider sdk={database}>{props.children}</DatabaseProvider>
+      <FirestoreProvider sdk={firestoreInstance}>
+        {props.children}
+      </FirestoreProvider>
     </AuthProvider>
   );
 };

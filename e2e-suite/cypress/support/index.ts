@@ -45,3 +45,6 @@ Cypress.Commands.add("singInFromEmailLink", (email: string) => {
     cy.visit(myOobCode.oobLink);
   });
 });
+Cypress.Commands.add("pathnameShouldBe", (pathname: string) => {
+  cy.location().should((l) => expect(l.pathname).to.eq(pathname));
+});
