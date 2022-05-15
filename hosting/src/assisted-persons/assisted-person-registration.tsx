@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import React from "react";
 import { useFirestore } from "reactfire";
 import { addDoc, collection } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 type AssistedPersonType = {
   personName: string;
@@ -11,11 +12,11 @@ type AssistedPersonType = {
 export const AssistedPersonRegistration = () => {
   const { handleSubmit, register } = useForm<AssistedPersonType>();
   const firestore = useFirestore();
+  const navigate = useNavigate();
   const onSubmit = async (data: AssistedPersonType) => {
-    console.log({ data, firestore });
     const collectionReference = collection(firestore, "assistedPersons");
-    const docRef = await addDoc(collectionReference, data);
-    console.log("Assisted person document written with ID: ", docRef.id);
+    await addDoc(collectionReference, data);
+    navigate("..");
   };
   return (
     <Stack spacing={2}>

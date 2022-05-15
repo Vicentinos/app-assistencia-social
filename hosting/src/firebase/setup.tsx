@@ -1,11 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { AuthProvider, FirestoreProvider, useFirebaseApp } from "reactfire";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
-import {
-  connectFirestoreEmulator,
-  getFirestore,
-  setLogLevel,
-} from "firebase/firestore";
+import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
 export const FirebaseSetup: React.FC<
   PropsWithChildren<Record<string, unknown>>
@@ -15,7 +11,6 @@ export const FirebaseSetup: React.FC<
 
   const auth = getAuth(app);
   if (process.env.NODE_ENV !== "production" && !auth.emulatorConfig) {
-    setLogLevel("debug");
     connectFirestoreEmulator(firestoreInstance, "localhost", 8088);
     connectAuthEmulator(auth, "http://localhost:9099");
   }
