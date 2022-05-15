@@ -15,5 +15,9 @@ const pluginConfig: Cypress.PluginConfig = (on) => {
       return null;
     },
   });
+  on("before:browser:launch", (browser, launchOptions) => {
+    launchOptions.args.push("--proxy-bypass-list=<-loopback>,localhost:8088");
+    return launchOptions;
+  });
 };
 export default pluginConfig;
