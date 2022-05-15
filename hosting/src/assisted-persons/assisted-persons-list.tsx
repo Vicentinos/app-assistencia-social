@@ -6,6 +6,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React from "react";
 
@@ -16,12 +17,16 @@ export const AssistedPersonsList = () => {
     <Table role={"table"} aria-label={"Lista de pessoas assistidas"}>
       <TableHead>
         <TableRow>
+          <TableCell>ID</TableCell>
           <TableCell>Nome</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {docs.data.docs.map((doc) => (
-          <TableRow>
+          <TableRow key={doc.id}>
+            <TableCell>
+              <Typography variant={"caption"}>{doc.id}</Typography>
+            </TableCell>
             <TableCell>{doc.get("personName")}</TableCell>
           </TableRow>
         ))}
