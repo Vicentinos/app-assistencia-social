@@ -1,9 +1,12 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "types": ["vite/client"],
     "jsx": "react",
     "esModuleInterop": true,
     "isolatedModules": true,
-    "target": "ESNext"
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node"
   }
 }
