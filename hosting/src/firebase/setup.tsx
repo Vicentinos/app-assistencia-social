@@ -13,7 +13,6 @@ import {
 } from "firebase/app-check";
 
 const appCheckToken = import.meta.env.VITE_APP_CHECK_TOKEN || "";
-console.log(appCheckToken);
 export const FirebaseSetup: React.FC<
   PropsWithChildren<Record<string, unknown>>
 > = (props) => {
@@ -22,7 +21,6 @@ export const FirebaseSetup: React.FC<
     provider: new ReCaptchaEnterpriseProvider(appCheckToken),
     isTokenAutoRefreshEnabled: true,
   });
-  console.log(appCheck);
   const firestoreInstance = getFirestore(app);
   const auth = getAuth(app);
   if (import.meta.env.VITE_ENV === "local" && !auth.emulatorConfig) {
