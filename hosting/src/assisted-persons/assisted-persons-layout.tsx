@@ -2,7 +2,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-const AssistedPersons = () => {
+const AssistedPersonsLayout = () => {
   const navigate = useNavigate();
   return (
     <Stack spacing={2}>
@@ -23,4 +23,4 @@ const AssistedPersons = () => {
     </Stack>
   );
 };
-export { AssistedPersons };
+export { AssistedPersonsLayout };
