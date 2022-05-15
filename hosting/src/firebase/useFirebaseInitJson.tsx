@@ -10,7 +10,7 @@ export function useFirebaseInitJson() {
           setInitJson(json);
         });
       })
-      .catch();
+      .catch(() => undefined);
     return () => {
       abortController.abort();
     };
