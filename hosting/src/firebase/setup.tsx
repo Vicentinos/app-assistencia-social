@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useMemo } from "react";
 import {
   AppCheckProvider,
   AuthProvider,
@@ -17,10 +17,14 @@ export const FirebaseSetup: React.FC<
   PropsWithChildren<Record<string, unknown>>
 > = (props) => {
   const app = useFirebaseApp();
-  const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaEnterpriseProvider(appCheckToken),
-    isTokenAutoRefreshEnabled: true,
-  });
+  const appCheck = useMemo(
+    () =>
+      initializeAppCheck(app, {
+        provider: new ReCaptchaEnterpriseProvider(appCheckToken),
+        isTokenAutoRefreshEnabled: true,
+      }),
+    [app]
+  );
   const firestoreInstance = getFirestore(app);
   const auth = getAuth(app);
   if (import.meta.env.VITE_ENV === "local" && !auth.emulatorConfig) {
