@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Dev all" type="CompoundRunConfigurationType">
+    <toRun name="dev:cy" type="js.build_tools.npm" />
+    <toRun name="dev:emul" type="js.build_tools.npm" />
+    <toRun name="dev:host" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>
