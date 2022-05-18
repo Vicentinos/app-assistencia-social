@@ -6,6 +6,12 @@ initializeApp({
   credential: applicationDefault(),
   projectId: "app-assistencia-social-dev",
 });
+const proxyBypassOrigins = [
+  "<-loopback>",
+  "localhost:8088",
+  "content-firebaseappcheck.googleapis.com",
+  "www.google.com",
+];
 const pluginConfig: Cypress.PluginConfig = (on) => {
   on("task", {
     makeUserAdmin: async (email: string): Promise<null> => {
@@ -16,7 +22,9 @@ const pluginConfig: Cypress.PluginConfig = (on) => {
     },
   });
   on("before:browser:launch", (browser, launchOptions) => {
-    launchOptions.args.push("--proxy-bypass-list=<-loopback>,localhost:8088");
+    launchOptions.args.push(
+      `--proxy-bypass-list=${proxyBypassOrigins.join(",")}`
+    );
     return launchOptions;
   });
 };
