@@ -56,5 +56,7 @@ describe("Assisted families management", () => {
       .parent("tr")
       .as("added-person-line");
     cy.get("@added-person-line").contains(assistedFamilyFixture.phone);
+    cy.get("@added-person-line").contains(assistedFamilyFixture.cpf);
+    cy.get("@added-person-line").contains(assistedFamilyFixture.neighborhood);
   });
 });
