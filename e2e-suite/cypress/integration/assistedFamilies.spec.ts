@@ -1,15 +1,14 @@
 import * as Chance from "chance";
 
 describe("Assisted families management", () => {
+  let assistedFamilyFixture: { name: string };
   beforeEach(() => {
     cy.clearIndexedDB();
-  });
-  it("should register a new family with just the name field", () => {
     const chance = new Chance();
     const voluntaryUserFixture = {
       email: chance.email(),
     };
-    const assistedFamilyFixture = {
+    assistedFamilyFixture = {
       name: chance.name({ nationality: "it" }),
     };
     cy.registerNewUser(voluntaryUserFixture.email);
@@ -17,6 +16,8 @@ describe("Assisted families management", () => {
     cy.contains("Este é o primeiro acesso com o email");
     cy.task("makeUserAdmin", voluntaryUserFixture.email);
     cy.reload();
+  });
+  it("should register a new family with just the name field", () => {
     cy.pathnameShouldBe("/assistidos");
     cy.findByText("Cadastrar pessoa assistida").click();
     cy.pathnameShouldBe("/assistidos/cadastro");
