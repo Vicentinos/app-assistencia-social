@@ -19,6 +19,9 @@ export const AssistedPersonsList = () => {
         <TableRow>
           <TableCell>ID</TableCell>
           <TableCell>Nome</TableCell>
+          <TableCell>Telefone</TableCell>
+          <TableCell>CPF</TableCell>
+          <TableCell>Bairro</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -28,6 +31,9 @@ export const AssistedPersonsList = () => {
               <Typography variant={"caption"}>{doc.id}</Typography>
             </TableCell>
             <TableCell>{doc.get("personName")}</TableCell>
+            <TableCell>{doc.get("phone")}</TableCell>
+            <TableCell>{doc.get("cpf")}</TableCell>
+            <TableCell>{doc.get("neighborhood")}</TableCell>
           </TableRow>
         ))}
       </TableBody>

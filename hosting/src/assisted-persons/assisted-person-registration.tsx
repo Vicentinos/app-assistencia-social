@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 type AssistedPersonType = {
   personName: string;
+  phone: string;
+  cpf: string;
+  neighborhood: string;
 };
 export const AssistedPersonRegistration = () => {
   const { handleSubmit, register } = useForm<AssistedPersonType>();
@@ -26,6 +29,12 @@ export const AssistedPersonRegistration = () => {
           <TextField
             inputProps={{ ...register("personName") }}
             label={"Nome"}
+          />
+          <TextField inputProps={{ ...register("phone") }} label={"Telefone"} />
+          <TextField inputProps={{ ...register("cpf") }} label={"CPF"} />
+          <TextField
+            inputProps={{ ...register("neighborhood") }}
+            label={"Bairro"}
           />
           <Button type="submit" variant={"contained"}>
             Cadastrar
