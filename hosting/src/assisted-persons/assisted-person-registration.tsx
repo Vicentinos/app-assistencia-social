@@ -1,4 +1,4 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import React from "react";
@@ -11,9 +11,10 @@ type AssistedPersonType = {
   phone: string;
   cpf: string;
   neighborhood: string;
+  status: string;
 };
 export const AssistedPersonRegistration = () => {
-  const { handleSubmit, register } = useForm<AssistedPersonType>();
+  const { handleSubmit, register, setValue } = useForm<AssistedPersonType>();
   const firestore = useFirestore();
   const navigate = useNavigate();
   const onSubmit = async (data: AssistedPersonType) => {
@@ -36,6 +37,23 @@ export const AssistedPersonRegistration = () => {
             inputProps={{ ...register("neighborhood") }}
             label={"Bairro"}
           />
+          <TextField
+            fullWidth
+            inputProps={register("status")}
+            select
+            onChange={(e) => setValue("status", e.target.value)}
+            label={"Status"}
+            defaultValue={null}
+            role={"listbox"}
+          >
+            {["assistida", "cancelada", "extra", "funcionária", "sobra"].map(
+              (option, index) => (
+                <MenuItem key={index} value={option} role={"option"}>
+                  {option}
+                </MenuItem>
+              )
+            )}
+          </TextField>
           <Button type="submit" variant={"contained"}>
             Cadastrar
           </Button>

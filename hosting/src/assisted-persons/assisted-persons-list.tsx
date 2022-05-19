@@ -22,6 +22,7 @@ export const AssistedPersonsList = () => {
           <TableCell>Telefone</TableCell>
           <TableCell>CPF</TableCell>
           <TableCell>Bairro</TableCell>
+          <TableCell>Status</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -34,6 +35,7 @@ export const AssistedPersonsList = () => {
             <TableCell>{doc.get("phone")}</TableCell>
             <TableCell>{doc.get("cpf")}</TableCell>
             <TableCell>{doc.get("neighborhood")}</TableCell>
+            <TableCell>{doc.get("status")}</TableCell>
           </TableRow>
         ))}
       </TableBody>

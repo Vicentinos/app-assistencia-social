@@ -2,6 +2,7 @@ import * as Chance from "chance";
 
 describe("Assisted families management", () => {
   let assistedFamilyFixture: {
+    status: string;
     neighborhood: string;
     cpf: string;
     phone: string;
@@ -18,6 +19,13 @@ describe("Assisted families management", () => {
       phone: chance.phone(),
       cpf: chance.cpf(),
       neighborhood: chance.word(),
+      status: chance.pickone([
+        "assistida",
+        "cancelada",
+        "extra",
+        "funcionária",
+        "sobra",
+      ]),
     };
     cy.registerNewUser(voluntaryUserFixture.email);
     cy.singInFromEmailLink(voluntaryUserFixture.email);
@@ -47,6 +55,8 @@ describe("Assisted families management", () => {
     cy.findByLabelText("Telefone").type(assistedFamilyFixture.phone);
     cy.findByLabelText("CPF").type(assistedFamilyFixture.cpf);
     cy.findByLabelText("Bairro").type(assistedFamilyFixture.neighborhood);
+    cy.findByLabelText("Status").click();
+    cy.findByText(assistedFamilyFixture.status).click();
     // click submit
     cy.findByRole("button", { name: "Cadastrar" }).click();
 
@@ -58,5 +68,6 @@ describe("Assisted families management", () => {
     cy.get("@added-person-line").contains(assistedFamilyFixture.phone);
     cy.get("@added-person-line").contains(assistedFamilyFixture.cpf);
     cy.get("@added-person-line").contains(assistedFamilyFixture.neighborhood);
+    cy.get("@added-person-line").contains(assistedFamilyFixture.status);
   });
 });
