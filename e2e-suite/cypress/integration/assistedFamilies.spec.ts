@@ -33,7 +33,13 @@ describe("Assisted families management", () => {
     cy.task("makeUserAdmin", voluntaryUserFixture.email);
     cy.reload();
   });
-  it("should register a new family with just the name field", () => {
+  it("should display a warning if name is empty", () => {
+    cy.pathnameShouldBe("/assistidos");
+    cy.findByText("Cadastrar pessoa assistida").click();
+    cy.findByText("Cadastrar").click();
+    cy.contains("Nome é obrigatório");
+  });
+  it.skip("should register a new family with just the name field", () => {
     cy.pathnameShouldBe("/assistidos");
     cy.findByText("Cadastrar pessoa assistida").click();
     cy.pathnameShouldBe("/assistidos/cadastro");
@@ -44,7 +50,7 @@ describe("Assisted families management", () => {
       assistedFamilyFixture.name
     );
   });
-  it("should register a new family with all fields", () => {
+  it.skip("should register a new family with all fields", () => {
     cy.pathnameShouldBe("/assistidos");
     cy.findByText("Cadastrar pessoa assistida").click();
     cy.pathnameShouldBe("/assistidos/cadastro");
