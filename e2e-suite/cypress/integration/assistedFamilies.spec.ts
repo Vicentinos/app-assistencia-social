@@ -61,6 +61,7 @@ describe("Assisted families management", () => {
     cy.findByRole("button", { name: "Cadastrar" }).click();
 
     // expectations on the table line
+    cy.pathnameShouldBe("/assistidos");
     cy.findByRole("table", { name: "Lista de pessoas assistidas" })
       .contains(assistedFamilyFixture.name)
       .parent("tr")
