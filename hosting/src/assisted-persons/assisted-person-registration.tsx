@@ -14,7 +14,8 @@ type AssistedPersonType = {
   status: string;
 };
 export const AssistedPersonRegistration = () => {
-  const { handleSubmit, register, setValue } = useForm<AssistedPersonType>();
+  const { handleSubmit, register, setValue, formState } =
+    useForm<AssistedPersonType>();
   const firestore = useFirestore();
   const navigate = useNavigate();
   const onSubmit = async (data: AssistedPersonType) => {
@@ -22,14 +23,19 @@ export const AssistedPersonRegistration = () => {
     await addDoc(collectionReference, data);
     navigate("..");
   };
+  console.log(formState.errors.personName);
   return (
     <Stack spacing={2}>
       <Typography>Cadastro de pessoa assistida</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={1}>
           <TextField
-            inputProps={{ ...register("personName") }}
+            inputProps={{ ...register("personName", { required: true }) }}
             label={"Nome"}
+            error={Boolean(formState.errors.personName)}
+            helperText={
+              formState.errors.personName ? "Nome é obrigatório" : null
+            }
           />
           <TextField inputProps={{ ...register("phone") }} label={"Telefone"} />
           <TextField inputProps={{ ...register("cpf") }} label={"CPF"} />
